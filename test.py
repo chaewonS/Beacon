@@ -17,11 +17,11 @@ except:
         print "error accessing bluetooth device..."
         sys.exit(1)
 
-blescan2.hci_le_set_scan_parameters(sock)
-blescan2.hci_enable_le_scan(sock)
+blescan.hci_le_set_scan_parameters(sock)
+blescan.hci_enable_le_scan(sock)
 
 while True:
-        returnedList = blescan2.parse_events(sock, 10)
+        returnedList = blescan.parse_events(sock, 10)
         print "----------"
         for beacon in returnedList:
                 if beacon[:17] == '00:19:01:70:81:': #특정 비콘을 선택해서 출력
