@@ -9,20 +9,19 @@ import json
 
 import threading
 
+with io.open('./test.json') as f:
+    info = json.load(f)
 #====================================Classes============================================
 class Beacon():
     def __init__(self, mac, rssi):
         self.MAC = mac
-        with io.open('./test.json') as f:
-            info = json.load(f)
+     
     # self.X = 'MAC 주소 활용해서 만들어진 test.json파일에서 가져온 X'
     # 비콘 x, y 좌표 출력 부분 추가
-    if mac[:5]=="00:19":
+        
         self.X = info[mac]["location"].split(',')[0]
         self.Y = info[mac]["location"].split(',')[1]
         self.RSSI = int(rssi) #거리 반비례 변수, *음수도 정수 변환 가능 *
-    else:
-        print("비콘이 아닙니다.")
 
     def getX(self):
         return self.X
@@ -45,7 +44,8 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')]
+top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')]
+
 
 dev_id = 0#scan
 
@@ -56,11 +56,12 @@ def flusshing():
 
 
     global top3_list
-    top3_list =[Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')]
+    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')]
 
     timer.start()
 
 def getTrilateration(first, second, third):
+    print("호출")
     x1, y1 = first.getXY()
     x2, y2 = second.getXY()
     x3, y3 = third.getXY()
@@ -78,11 +79,10 @@ def getTrilateration(first, second, third):
 
 #================== Select three ==================================
 
-
-
 if __name__ == '__main__':
+
     #====init========
-    lacationX = -100
+    locationX = -100
     locationY = -100
     flusshing()
 
@@ -100,22 +100,22 @@ if __name__ == '__main__':
 
 
     while True:
-        top3_list = [Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')] 
+        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')] 
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
         print("----------")
         
         for beacon in returnedList:
-            if beacon[:5] == '00:19':
-                print(beacon)
+            print(beacon)
+            if beacon[:5] == "00:19":
+                
                 now_mac = beacon[:17]
                 now_rssi = beacon[66:] 
 
-
+                maclist =[]
                 for x in top3_list:
                     maclist.append(x.getMAC())
-
 
                 if (now_mac in maclist) and (top3_list[maclist.index(now_mac)].getRSSI() < now_rssi):
                     if len(top3_list) <3:
@@ -142,3 +142,4 @@ if __name__ == '__main__':
                         locationX, locationY = getTrilateration() #삼변측량 결과
                     except:
                         print("비었음/ 연산 불가")
+            print(locationX, locationY)
