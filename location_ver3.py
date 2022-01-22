@@ -105,8 +105,9 @@ while True:
     maclist = []
     returnedList = blescan.parse_events(sock, 10)
     print("----------")
-    if beacon[:5] == '00:19':
-        for beacon in returnedList:
+  
+    for beacon in returnedList:
+        if beacon[:5] == '00:19':
             print(beacon)
             now_mac = beacon[:17]
             now_rssi = beacon[66:] 
@@ -141,4 +142,4 @@ while True:
                             locationX, locationY = getTrilateration() #삼변측량 결과
                         except:
                             print("비었음/ 연산 불가")
-        
+    
