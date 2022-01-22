@@ -44,7 +44,7 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')]
+top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
 
 dev_id = 0#scan
@@ -56,7 +56,7 @@ def flusshing():
 
 
     global top3_list
-    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')]
+    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
     timer.start()
 
@@ -75,7 +75,7 @@ def getTrilateration(first, second, third):
 
     y = (  ((T*(x2-x3))) - (S *(x2-x1))  ) / (  ((y1-y2)*(x2-x3)) -  ((y3-y2)*(x2-x1)) )
     x = ((y* (y1-y2)) - T) /(x2-x1)
-    return x,y
+    return 123,123
 
 #================== Select three ==================================
 
@@ -100,15 +100,16 @@ if __name__ == '__main__':
 
 
     while True:
-        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:81:ed','-100')] 
+        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')] 
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
         print("----------")
         
         for beacon in returnedList:
-            print(beacon)
+
             if beacon[:5] == "00:19":
+                print(beacon)
                 
                 now_mac = beacon[:17]
                 now_rssi = beacon[66:] 
@@ -117,7 +118,7 @@ if __name__ == '__main__':
                 for x in top3_list:
                     maclist.append(x.getMAC())
 
-                if (now_mac in maclist) and (top3_list[maclist.index(now_mac)].getRSSI() < now_rssi):
+                if (now_mac in maclist) and (top3_list[maclist.index(now_mac)].getRSSI() < now_rssi):#1. 리스트에 이미 있는 비콘이며, 더 가까워진 경우.
                     if len(top3_list) <3:
                         top3_list[maclist.index(now_mac)].RSSI = now_rssi
                         top3_list.sort(key= lambda x : x.getRSSI())
@@ -126,9 +127,9 @@ if __name__ == '__main__':
                         top3_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top3_list.sort(key= lambda x : x.getRSSI())
                     try:
-                        locationX, locationY = getTrilateration()
+                        locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2])
                     except:
-                        print("비었음/ 연산 불가")
+                        print("비었음/ 연산 불가 duplicated.")
 
                 elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
                     #이하 코드 같음
@@ -139,7 +140,7 @@ if __name__ == '__main__':
                         top3_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
                         top3_list.sort(key= lambda x : x.getRSSI())
                     try:
-                        locationX, locationY = getTrilateration() #삼변측량 결과
+                        locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2]) #삼변측량 결과
                     except:
-                        print("비었음/ 연산 불가")
-            print(locationX, locationY)
+                        print("비었음/ 연산 불가 no duplicated.")
+        print(locationX, locationY)
