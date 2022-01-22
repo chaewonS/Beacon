@@ -19,8 +19,8 @@ class Beacon():
     # self.X = 'MAC 주소 활용해서 만들어진 test.json파일에서 가져온 X'
     # 비콘 x, y 좌표 출력 부분 추가
         
-        self.X = info[mac]["location"].split(',')[0]
-        self.Y = info[mac]["location"].split(',')[1]
+        self.X = int(info[mac]["location"].split(',')[0])
+        self.Y = int(info[mac]["location"].split(',')[1])
         self.RSSI = int(rssi) #거리 반비례 변수, *음수도 정수 변환 가능 *
 
     def getX(self):
@@ -75,7 +75,7 @@ def getTrilateration(first, second, third):
 
     y = (  ((T*(x2-x3))) - (S *(x2-x1))  ) / (  ((y1-y2)*(x2-x3)) -  ((y3-y2)*(x2-x1)) )
     x = ((y* (y1-y2)) - T) /(x2-x1)
-    return 123,123
+    return y,x
 
 #================== Select three ==================================
 
