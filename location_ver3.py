@@ -15,14 +15,14 @@ class Beacon():
         self.MAC = mac
         with io.open('./test.json') as f:
             info = json.load(f)
-        # self.X = 'MAC 주소 활용해서 만들어진 test.json파일에서 가져온 X'
-        # 비콘 x, y 좌표 출력 부분 추가
-        if mac[:5]=="00:19":
-            self.X = info[mac]["location"].split(',')[0]
-            self.Y = info[mac]["location"].split(',')[1]
-            self.RSSI = int(rssi) #거리 반비례 변수, *음수도 정수 변환 가능 *
-        else:
-            print("비콘이 아닙니다.")
+    # self.X = 'MAC 주소 활용해서 만들어진 test.json파일에서 가져온 X'
+    # 비콘 x, y 좌표 출력 부분 추가
+    if mac[:5]=="00:19":
+        self.X = info[mac]["location"].split(',')[0]
+        self.Y = info[mac]["location"].split(',')[1]
+        self.RSSI = int(rssi) #거리 반비례 변수, *음수도 정수 변환 가능 *
+    else:
+        print("비콘이 아닙니다.")
 
     def getX(self):
         return self.X
@@ -35,7 +35,7 @@ class Beacon():
 
     def getRSSI(self):
         return self.RSSI
-    
+
     def getMAC(self):
         return self.MAC
 
@@ -99,47 +99,46 @@ if __name__ == '__main__':
 
 
 
-while True:
-    top3_list = [Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')] 
+    while True:
+        top3_list = [Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')] 
 
-    maclist = []
-    returnedList = blescan.parse_events(sock, 10)
-    print("----------")
-  
-    for beacon in returnedList:
-        if beacon[:5] == '00:19':
-            print(beacon)
-            now_mac = beacon[:17]
-            now_rssi = beacon[66:] 
-
-
-            for x in top3_list:
-                maclist.append(x.getMAC())
+        maclist = []
+        returnedList = blescan.parse_events(sock, 10)
+        print("----------")
+        
+        for beacon in returnedList:
+            if beacon[:5] == '00:19':
+                print(beacon)
+                now_mac = beacon[:17]
+                now_rssi = beacon[66:] 
 
 
-            if (now_mac in maclist) and (top3_list[maclist.index(now_mac)].getRSSI() < now_rssi):
+                for x in top3_list:
+                    maclist.append(x.getMAC())
+
+
+                if (now_mac in maclist) and (top3_list[maclist.index(now_mac)].getRSSI() < now_rssi):
                     if len(top3_list) <3:
                         top3_list[maclist.index(now_mac)].RSSI = now_rssi
                         top3_list.sort(key= lambda x : x.getRSSI())
                     else:
-                        #3개가 꽉 찼음을 발견했을 때
+                    #3개가 꽉 찼음을 발견했을 때
                         top3_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top3_list.sort(key= lambda x : x.getRSSI())
-                        try:
-                            locationX, locationY = getTrilateration()
-                        except:
-                            print("비었음/ 연산 불가")
+                    try:
+                        locationX, locationY = getTrilateration()
+                    except:
+                        print("비었음/ 연산 불가")
 
-            elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
-                        #이하 코드 같음
+                elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
+                    #이하 코드 같음
                     if len(top3_list) <3:
                         top3_list.append(Beacon(now_mac, now_rssi)) #리스트에 추가
-                        top3_list.sort(key= lambda x : x.getRSSI()) #* vscode에서 getter가 안읽혀서 걱정....;; but 같은 조건에서 다 해봤는데 다른 코드는 잘 읽혀서 그냥 vscode 문제인듯*
+                        top3_list.sort(key= lambda x : x.getRSSI())
                     else: #큐 동작
                         top3_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
                         top3_list.sort(key= lambda x : x.getRSSI())
-                        try:
-                            locationX, locationY = getTrilateration() #삼변측량 결과
-                        except:
-                            print("비었음/ 연산 불가")
-    
+                    try:
+                        locationX, locationY = getTrilateration() #삼변측량 결과
+                    except:
+                        print("비었음/ 연산 불가")
