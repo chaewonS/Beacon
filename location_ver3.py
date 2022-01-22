@@ -45,7 +45,7 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('0','-1'),Beacon('0','-1'),Beacon('0','-1')]
+top3_list =[Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')]
 
 dev_id = 0#scan
 
@@ -56,7 +56,7 @@ def flusshing():
 
 
     global top3_list
-    top3_list =[Beacon('0','-1'),Beacon('0','-1'),Beacon('0','-1')]
+    top3_list =[Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')]
 
     timer.start()
 
@@ -82,8 +82,8 @@ def getTrilateration(first, second, third):
 
 if __name__ == '__main__':
     #====init========
-    lacationX = -1
-    locationY = -1
+    lacationX = -100
+    locationY = -100
     flusshing()
 
     try:
@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
 
 while True:
-    top3_list = [Beacon('0','-1'),Beacon('0','-1'),Beacon('0','-1')] 
+    top3_list = [Beacon('0','-100'),Beacon('0','-100'),Beacon('0','-100')] 
 
     maclist = []
     returnedList = blescan.parse_events(sock, 10)
