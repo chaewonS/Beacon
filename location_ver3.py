@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+# from easy_trilateration.model import *  
+# from easy_trilateration.least_squares import easy_least_squares  
+# from easy_trilateration.graph import *  
+import math
 
 import io
 import blescan
@@ -61,21 +65,33 @@ def flusshing():
     timer.start()
 
 def getTrilateration(first, second, third):
-    print("호출")
+    # print("호출")
     x1, y1 = first.getXY()
     x2, y2 = second.getXY()
     x3, y3 = third.getXY()
 
-    r1 = 1/first.getRSSI()
-    r2 = 1/second.getRSSI()
-    r3 = 1/third.getRSSI()
+    r1 = first.getRSSI() #거리 : 가까울수록 작아짐.
+    r2 = second.getRSSI() #RSSI : 가까울수록 커짐.
+    r3 = third.getRSSI() #역수로 해야하나...
 
     S = (x3**2 - x2**2 + y3**2 - y2**2 + r2**2 - r3**2 )/2.0
     T = (x1**2 - x2**2 + y1**2 + y2**2 + r2**2 - r1**2)/2.0
 
     y = (  ((T*(x2-x3))) - (S *(x2-x1))  ) / (  ((y1-y2)*(x2-x3)) -  ((y3-y2)*(x2-x1)) )
     x = ((y* (y1-y2)) - T) /(x2-x1)
-    return y,x
+    # arr = [Circle(x1,y1, float(first.getRSSI())),    #(x,y,r)
+    # Circle(x2,y2, float(second.getRSSI())),
+    # Circle(x3,y3, float(third.getRSSI()))]
+    # # Circle(8,2, float(math.sqrt(17)))         # 4 beacon 으로 하면 정확도 up
+
+    # result, meta = easy_least_squares(arr)
+    # create_circle(result, target=True)
+    
+    # # 값 추출
+    # re = str(result)
+    # re = re.replace("Circle(","").replace(")","").replace(",","")
+    # x,y,r = re.split(" ")
+    return x,y
 
 #================== Select three ==================================
 
