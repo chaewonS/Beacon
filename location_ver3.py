@@ -63,6 +63,20 @@ def flusshing():
     top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
     timer.start()
+    
+# calculateDistance(txPower =xxx, rssi) {
+#   if (rssi == 0) {
+#     return -1.0; // if we cannot determine distance, return -1.
+#   }
+#   double ratio = rssi*1.0/txPower;
+#   if (ratio < 1.0) {
+#     return Math.pow(ratio,10);
+#   }
+#   else {
+#     double accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;
+#     return accuracy;
+#   }
+# }https://github.com/location-competition/indoor-location-competition-20
 
 def getTrilateration(first, second, third):
     # print("호출")
@@ -92,6 +106,7 @@ def getTrilateration(first, second, third):
     # re = re.replace("Circle(","").replace(")","").replace(",","")
     # x,y,r = re.split(" ")
     return x,y
+
 
 #================== Select three ==================================
 
