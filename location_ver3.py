@@ -63,20 +63,25 @@ def flusshing():
     top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
     timer.start()
-    
-# calculateDistance(txPower =xxx, rssi) {
-#   if (rssi == 0) {
-#     return -1.0; // if we cannot determine distance, return -1.
-#   }
-#   double ratio = rssi*1.0/txPower;
-#   if (ratio < 1.0) {
-#     return Math.pow(ratio,10);
-#   }
-#   else {
-#     double accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;
-#     return accuracy;
-#   }
-# }https://github.com/location-competition/indoor-location-competition-20
+
+#FB301BC 초기 설정 TxPower = 41
+def calculateDistance(rssi) :
+    txPower = 41
+    if (rssi == 0) :
+        return -1.0 #if we cannot determine distance return -1.
+    ratio = rssi*1.0/txPower #
+    if (ratio < 1.0) :
+        return ratio**10
+  
+    else:
+        accuracy =  (0.89976)*(ratio**7.7095) + 0.111
+        return accuracy
+# #https://github.com/location-competition/indoor-location-competition-20
+
+def simpleDistance(rssi):
+    TxPower = 41
+    return 10 ** ((TxPower - rssi )/(10/4)) # 4 = n : 실내공간
+
 
 def getTrilateration(first, second, third):
     # print("호출")
@@ -84,9 +89,20 @@ def getTrilateration(first, second, third):
     x2, y2 = second.getXY()
     x3, y3 = third.getXY()
 
-    r1 = first.getRSSI() #거리 : 가까울수록 작아짐.
-    r2 = second.getRSSI() #RSSI : 가까울수록 커짐.
-    r3 = third.getRSSI() #역수로 해야하나...
+    # 1 :
+    r1 = calculateDistance(first.getRSSI())
+    r2 = calculateDistance(second.getRSSI())
+    r3 = calculateDistance(third.getRSSI())
+    print("==============실제 거리와 비교해보기========================")
+    print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3)) #use old formatstring to run it with python 2.7
+    
+    
+    # 2 :
+    # r1 = calculateDistance(first.getRSSI())
+    # r2 = calculateDistance(second.getRSSI())
+    # r3 = calculateDistance(third.getRSSI())
+    # print("==============실제 거리와 비교해보기========================")
+    #print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3))
 
     S = (x3**2 - x2**2 + y3**2 - y2**2 + r2**2 - r3**2 )/2.0
     T = (x1**2 - x2**2 + y1**2 + y2**2 + r2**2 - r1**2)/2.0
