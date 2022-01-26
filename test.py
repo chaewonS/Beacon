@@ -49,3 +49,4 @@ while True:
                         print "rssi :  %s" %rssi
                         print "distance of calc : %f" %calculateDistance(int(rssi))
                         print "distance of simple : %f" %simpleDistance(int(rssi))
+                        print "================================================="
