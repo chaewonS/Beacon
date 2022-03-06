@@ -43,7 +43,8 @@ while True:
         returnedList = blescan.parse_events(sock, 10)
         print "----------"
         for beacon in returnedList:
-                if beacon[:17] == '00:19:01:70:81:': #특정 비콘을 선택해서 출력
+                #if beacon[:17] == '00:19:01:70:81:': #특정 비콘을 선택해서 출력
+                if beacon[:5] =='00:19':
                         rssi = beacon[66:]
                         print beacon
                         print "rssi :  %s" %rssi
