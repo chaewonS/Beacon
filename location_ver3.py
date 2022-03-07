@@ -80,7 +80,7 @@ def calculateDistance(rssi) :
 
 def simpleDistance(rssi):
     TxPower = 41
-    return 10 ** ((TxPower - rssi )/(10/4)) # 4 = n : 실내공간
+    return 10 ** ((TxPower - rssi )/(10*4)) # 4 = n : 실내공간
 
 
 def getTrilateration(first, second, third):
