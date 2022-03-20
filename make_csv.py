@@ -31,6 +31,7 @@ with open('distance_RSSI.csv', 'wb') as f:
             for beacon in returnedList:
                 #if beacon[:17] == '00:19:01:70:81:': #특정 비콘을 선택해서 출력
                 if beacon[:5] =='00:19':
+                        print beacon
                         rssi = beacon[66:]
                         data = (str(distance)+" "+ str(rssi)).split(" ")
                         if(data.__len__() is 2):#오류 없이 됐을 때만 반복 체크 및 해당 데이터 작성
