@@ -25,7 +25,7 @@ with open('distance_RSSI.csv', 'wb') as f:
 
     for i in range(30):
         maden = 0 #각 반복마다 작성된 신호의 수
-        while maden <5000:
+        while maden <500:
             returnedList = blescan.parse_events(sock, 10)
             print "----------"
             for beacon in returnedList:
@@ -39,6 +39,6 @@ with open('distance_RSSI.csv', 'wb') as f:
                             maden += 1
                             w.writerow(data)
 
-        input("비콘의 거리를 10cm 멀리 조정해주세요. <완료시 Enter>")
+        raw_input("비콘의 거리를 10cm 멀리 조정해주세요. <완료시 Enter>")
         distance += 0.1
         print("거리"+ str(distance) +"(으)로 측정을 시작합니다.")
