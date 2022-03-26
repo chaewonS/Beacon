@@ -9,7 +9,7 @@ import csv
 
 distance = 0.1# 측정 시작 거리
 with open('distance_RSSI.csv', 'wb') as f:
-    w=csv.writer('MAC address', 'Distance', 'RSSI' )
+    w=csv.writer(['MAC address', 'Distance', 'RSSI'] )
     w.writerow()
     dev_id = 0
     try:
@@ -25,7 +25,7 @@ with open('distance_RSSI.csv', 'wb') as f:
 
     for i in range(30):
         maden = 0 #각 반복마다 작성된 신호의 수
-        while maden <500:
+        while maden <5000:
             returnedList = blescan.parse_events(sock, 10)
             print "----------"
             for beacon in returnedList:
