@@ -7,7 +7,7 @@ from glob import glob
 import math
 
 import io
-from tkinter import Y
+#from tkinter import Y
 import blescan
 import sys
 import bluetooth._bluetooth as bluez
@@ -51,7 +51,7 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
+top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
 
 dev_id = 0#scan
@@ -63,7 +63,7 @@ def flusshing():
 
 
     global top3_list
-    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')]
+    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')]
 
     timer.start()
 
@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
 
     while True:
-        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:85:95','-100'),Beacon('00:19:01:70:85:c3','-100')] 
+        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')] 
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
