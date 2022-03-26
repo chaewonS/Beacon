@@ -9,7 +9,7 @@ import csv
 
 distance = 0.1# 측정 시작 거리
 with open('distance_RSSI.csv', 'wb') as f:
-    w=csv.writer(['MAC address', 'Distance', 'RSSI'] )
+    w=csv.writer("MACaddress,Distance,RSSI")
     w.writerow()
     dev_id = 0
     try:
