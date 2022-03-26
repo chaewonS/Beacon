@@ -14,7 +14,7 @@ if(sys.argv >1):
     distance = float(sys.argv[1])#사용자 입력 시작 거리
     add_to_filename = sys.argv[2]#사용자 입력 파일명에 추가할 이름
 
-with open('distance_RSSI.csv'+add_to_filename, 'wb') as f:
+with open('distance_RSSI'+ add_to_filename + '.csv', 'wb') as f:
     w=csv.writer(f)
     w.writerow(['MACaddress','Distance','RSSI'])
     dev_id = 0
