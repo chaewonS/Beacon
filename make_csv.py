@@ -49,3 +49,4 @@ with open('distance_RSSI'+ add_to_filename + '.csv', 'wb') as f:
         raw_input("비콘의 거리를 10cm 멀리 조정해주세요. <완료시 Enter>")
         distance += 0.1
         print("거리"+ str(distance) +"(으)로 측정을 시작합니다.")
+print("파일 작성 완료!!!")
