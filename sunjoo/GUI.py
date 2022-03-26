@@ -3,15 +3,17 @@
 # from easy_trilateration.model import *  
 # from easy_trilateration.least_squares import easy_least_squares  
 # from easy_trilateration.graph import *  
+from glob import glob
 import math
 
 import io
+from tkinter import Y
 import blescan
 import sys
 import bluetooth._bluetooth as bluez
 import json
-from tkinter import*
-
+#from tkinter import*
+import Tkinter
 import threading
 
 with io.open('./test.json') as f:
@@ -135,18 +137,21 @@ def showposition():
 #================== Select three ==================================
 
 if __name__ == '__main__':
-
+    global x
+    global y
+    x=1
+    y=1
     #====init========
     locationX = -100
     locationY = -100
     flusshing()
-    master = Tk()
+    master = Tkinter.Tk()
     width = 1080
     height = 650
     #label = Label(master, text="placeholder").pack()
-    canvas = Canvas(master, width=width, height=height)
+    canvas = Tkinter.Canvas(master, width=width, height=height)
 
-    rectanglesize = 7
+    rectanglesize = 30
     SP_w = 215 #1080-650/2
     SP_h = 10 #StartPoint
     polygon = canvas.create_rectangle(SP_w,SP_h, width-SP_w,height-SP_h)
