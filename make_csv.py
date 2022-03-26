@@ -35,7 +35,7 @@ with open('distance_RSSI.csv', 'wb') as f:
                         print str(distance) + "거리에서 " + str(maden) +"개의 신호가 작성되는 중..."
                         rssi = beacon[66:]
                         data = (str(beacon[:17])+" "+str(distance)+" "+ str(rssi)).split(" ")
-                        if(data.__len__() is 2):#오류 없이 됐을 때만 반복 체크 및 해당 데이터 작성
+                        if(data.__len__() is 3):#오류 없이 됐을 때만 반복 체크 및 해당 데이터 작성
                             maden += 1
                             w.writerow(data)
 
