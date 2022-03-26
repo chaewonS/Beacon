@@ -32,12 +32,13 @@ with open('distance_RSSI'+ add_to_filename + '.csv', 'wb') as f:
     while i < 30:
         i = distance*10
         maden = 0 #각 반복마다 작성된 신호의 수
-        while maden <5000:
+        while maden <10000:
             returnedList = blescan.parse_events(sock, 10)
             print "----------"
             for beacon in returnedList:
-                #if beacon[:17] == '00:19:01:70:81:': #특정 비콘을 선택해서 출력
-                if beacon[:5] =='00:19':
+                if beacon[:17] == '00:19:01:70:81:2d' or beacon[:17]=='00:19:01:70:82:62' or beacon[:17]=='00:19:01:70:85:c3' or beacon[:17]=='00:19:01:70:82:cb':
+			#특정 비콘을 선택해서 출력
+                #if beacon[:5] =='00:19':
                         print beacon
                         print str(distance) + "거리에서 " + str(maden) +"개의 신호가 작성되는 중..."
                         rssi = beacon[66:]
