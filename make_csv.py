@@ -29,7 +29,7 @@ with open('distance_RSSI.csv'+add_to_filename, 'wb') as f:
     blescan.hci_le_set_scan_parameters(sock)
     blescan.hci_enable_le_scan(sock)
 
-    for i in range(30):
+    while i < 30:
         i = distance*10
         maden = 0 #각 반복마다 작성된 신호의 수
         while maden <5000:
