@@ -1,15 +1,27 @@
-from tkinter import*
 
+# -*- coding: utf-8 -*-
+import Tkinter
+
+global x
+global y
+x=1
+y=1
+global a
 def showposition():
+    global a
+    canvas.delete(a)
     global x
     global y
-    canvas.create_rectangle(SP_w +(x-1)*column, SP_h+(y-1)*row, SP_w+x*column,SP_h+y*row,fill="yellow")
-    canvas.after(1000, showposition)
-master = Tk()
+    x=x+1
+    y=y+1
+    a = canvas.create_rectangle(SP_w +(x-1)*column, SP_h+(y-1)*row, SP_w+x*column,SP_h+y*row,fill="yellow")
+    canvas.after(1000,showposition)
+    
+master = Tkinter.Tk()
 width = 1080
 height = 650
 #label = Label(master, text="placeholder").pack()
-canvas = Canvas(master, width=width, height=height)
+canvas = Tkinter.Canvas(master, width=width, height=height)
 
 rectanglesize = 7
 SP_w = 215 #1080-650/2
@@ -31,6 +43,7 @@ y3 = canvas.create_line(SP_w+column*3, SP_h, SP_w +column*3, height-SP_h)
 y4 = canvas.create_line(SP_w+column*4, SP_h, SP_w +column*4, height-SP_h)
 y5 = canvas.create_line(SP_w+column*5, SP_h, SP_w +column*5, height-SP_h)
 y6 = canvas.create_line(SP_w+column*6, SP_h, SP_w +column*6, height-SP_h)
+a=canvas.create_rectangle(1,1,2,2)
 showposition()
 canvas.pack()
 canvas.mainloop()
