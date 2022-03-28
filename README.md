@@ -1,6 +1,7 @@
 # Beacon
 비콘 관련
 
+##잊지말자! ' git pull '
 
 1. 비콘 iBeacon Scanner
 
