@@ -45,6 +45,27 @@ beacon8["location"] = "0,0"
 beacon8["place"] = "ML415"
 Beacon["00:19:01:70:86:03"] = beacon8
 
+#아래부턴 선주가 가지고있음 - 3/29
+beacon9 = dict()
+beacon9["location"] = "1,1"
+beacon9["place"] = "좌상단"
+Beacon["00:19:01:70:81:D0"] = beacon9
+
+beacon10 = dict()
+beacon10["location"] = "7,1"
+beacon10["place"] = "우상단"
+Beacon["00:19:01:70:81:75"] = beacon10
+
+beacon11 = dict()
+beacon11["location"] = "1,7"
+beacon11["place"] = "좌하단"
+Beacon["00:19:01:70:86:35"] = beacon11
+
+beacon12 = dict()
+beacon12["location"] = "7,7"
+beacon12["place"] = "우하단"
+Beacon["00:19:01:70:81:33"] = beacon12
+
 with io.open('./test.json', 'wb',
 # encoding='utf-8'
 )as make_file:
