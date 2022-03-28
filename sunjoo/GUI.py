@@ -7,7 +7,7 @@ from glob import glob
 import math
 
 import io
-#from tkinter import Y
+from re import A
 import blescan
 import sys
 import bluetooth._bluetooth as bluez
@@ -51,7 +51,7 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')]
+top3_list =[Beacon('00:19:01:70:81:D0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')]
 
 
 dev_id = 0#scan
@@ -63,7 +63,7 @@ def flusshing():
 
 
     global top3_list
-    top3_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')]
+    top3_list =[Beacon('00:19:01:70:81:D0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')]
 
     timer.start()
 
@@ -93,19 +93,19 @@ def getTrilateration(first, second, third):
     x3, y3 = third.getXY()
 
     # 1 :
-    r1 = calculateDistance(first.getRSSI())
-    r2 = calculateDistance(second.getRSSI())
-    r3 = calculateDistance(third.getRSSI())
-    print("==============실제 거리와 비교해보기========================")
-    print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3)) #use old formatstring to run it with python 2.7
+    #r1 = calculateDistance(first.getRSSI())
+    #r2 = calculateDistance(second.getRSSI())
+    #r3 = calculateDistance(third.getRSSI())
+    #print("==============실제 거리와 비교해보기========================")
+    #print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3)) #use old formatstring to run it with python 2.7
     
     
     # 2 :
-    # r1 = calculateDistance(first.getRSSI())
-    # r2 = calculateDistance(second.getRSSI())
-    # r3 = calculateDistance(third.getRSSI())
-    # print("==============실제 거리와 비교해보기========================")
-    #print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3))
+    r1 = simpleDistance(first.getRSSI())
+    r2 = simpleDistance(second.getRSSI())
+    r3 = simpleDistance(third.getRSSI())
+    print("==============실제 거리와 비교해보기===(심플)=====================")
+    print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3))
 
     S = (x3**2 - x2**2 + y3**2 - y2**2 + r2**2 - r3**2 )/2.0
     T = (x1**2 - x2**2 + y1**2 + y2**2 + r2**2 - r1**2)/2.0
@@ -125,11 +125,13 @@ def getTrilateration(first, second, third):
     # re = re.replace("Circle(","").replace(")","").replace(",","")
     # x,y,r = re.split(" ")
     return x,y
-
+global a
 def showposition():
+    global a
+    canvas.delete(a)
     global x
     global y
-    canvas.create_rectangle(SP_w +(x-1)*column, SP_h+(y-1)*row, SP_w+x*column,SP_h+y*row,fill="yellow")
+    a = canvas.create_rectangle(SP_w +(x-1)*column, SP_h+(y-1)*row, SP_w+x*column,SP_h+y*row,fill="yellow")
     canvas.after(1000, showposition)
 
 
@@ -188,7 +190,7 @@ if __name__ == '__main__':
 
 
     while True:
-        top3_list = [Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'),Beacon('00:19:01:70:85:c3','-100')] 
+        top3_list = [Beacon('00:19:01:70:81:D0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')] 
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
@@ -232,4 +234,6 @@ if __name__ == '__main__':
                     except:
                         print("비었음/ 연산 불가 no duplicated.")
         print(locationX, locationY)
+        x=int(locationX)
+        y=int(locationY)
 
