@@ -48,7 +48,7 @@ Beacon["00:19:01:70:84:4b"] = beacon8
 beacon9 = dict()
 beacon9["location"] = "1,1"
 beacon9["place"] = "좌상단"
-Beacon["00:19:01:70:81:D0"] = beacon9
+Beacon["00:19:01:70:81:d0"] = beacon9
 
 beacon10 = dict()
 beacon10["location"] = "7,1"

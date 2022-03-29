@@ -23,7 +23,7 @@ height = 650
 #label = Label(master, text="placeholder").pack()
 canvas = Tkinter.Canvas(master, width=width, height=height)
 
-rectanglesize = 7
+rectanglesize = 8
 SP_w = 215 #1080-650/2
 SP_h = 10 #StartPoint
 polygon = canvas.create_rectangle(SP_w,SP_h, width-SP_w,height-SP_h)
@@ -35,6 +35,7 @@ x3 = canvas.create_line(SP_w, SP_h+row*3, width-SP_w, SP_h+row*3)
 x4 = canvas.create_line(SP_w, SP_h+row*4, width-SP_w, SP_h+row*4)
 x5 = canvas.create_line(SP_w, SP_h+row*5, width-SP_w, SP_h+row*5)
 x6 = canvas.create_line(SP_w, SP_h+row*6, width-SP_w, SP_h+row*6)
+x7 = canvas.create_line(SP_w, SP_h+row*7, width-SP_w, SP_h+row*7)
 
 column = int((width-SP_w-SP_w)/rectanglesize) #열 간격
 y1 = canvas.create_line(SP_w+column, SP_h, SP_w +column, height-SP_h, fill="red")
@@ -43,6 +44,7 @@ y3 = canvas.create_line(SP_w+column*3, SP_h, SP_w +column*3, height-SP_h)
 y4 = canvas.create_line(SP_w+column*4, SP_h, SP_w +column*4, height-SP_h)
 y5 = canvas.create_line(SP_w+column*5, SP_h, SP_w +column*5, height-SP_h)
 y6 = canvas.create_line(SP_w+column*6, SP_h, SP_w +column*6, height-SP_h)
+y7 = canvas.create_line(SP_w+column*7, SP_h, SP_w +column*7, height-SP_h)
 a=canvas.create_rectangle(1,1,2,2)
 showposition()
 canvas.pack()

@@ -1,4 +1,4 @@
-
+ 
 # -*- coding: utf-8 -*-
 # from easy_trilateration.model import *  
 # from easy_trilateration.least_squares import easy_least_squares  
@@ -49,7 +49,7 @@ class Beacon():
 global top3_list
 
 
-top3_list =[Beacon('00:19:01:70:81:d0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')]
+top3_list =[Beacon('00:19:01:70:81:d0','-1'),Beacon('00:19:01:70:81:75','-1'),Beacon('00:19:01:70:86:35','-1')]
 
 
 dev_id = 0#scan
@@ -57,11 +57,11 @@ dev_id = 0#scan
 #========================================== Definition Of Functions ==================================
 def flusshing():
     print("Timer")
-    timer = threading.Timer(5, flusshing)
+    timer = threading.Timer(1000, flusshing)
 
 
     global top3_list
-    top3_list =[Beacon('00:19:01:70:81:d0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')]
+    top3_list =[Beacon('00:19:01:70:81:d0','-1'),Beacon('00:19:01:70:81:75','-1'),Beacon('00:19:01:70:86:35','-1')]
 
     timer.start()
 
@@ -82,6 +82,8 @@ def calculateDistance(rssi) :
 def simpleDistance(rssi):
     TxPower = 41
     #return 10 ** ((TxPower - rssi )/(10*4)) # 4 = n : 실내공간
+    if rssi == -1:
+        return -1
     return (TxPower - rssi) / (10*4)
 
 def getTrilateration(first, second, third):
@@ -96,7 +98,10 @@ def getTrilateration(first, second, third):
     r3 = calculateDistance(third.getRSSI())
     print("==============실제 거리와 비교해보기========================")
     print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3)) #use old formatstring to run it with python 2.7
-    
+    if r1==-1 or r2==-1 or r3==-1:
+        print("아직 때가 아니다")
+        return -1, -1
+        
     
     # 2 :
     # r1 = simpleDistance(first.getRSSI())
@@ -122,6 +127,8 @@ def getTrilateration(first, second, third):
     # re = str(result)
     # re = re.replace("Circle(","").replace(")","").replace(",","")
     # x,y,r = re.split(" ")
+    if x<0 or y<0 or x>100 or y>100:
+        return -1,-1
     return x,y
 global a
 
@@ -143,8 +150,8 @@ if __name__ == '__main__':
     x=1
     y=1
     #====init========
-    locationX = -100
-    locationY = -100
+    locationX = -1
+    locationY = -1
     flusshing()
     master = Tkinter.Tk()
     width = 1080
@@ -190,16 +197,16 @@ if __name__ == '__main__':
 
 
     while True:
-        top3_list = [Beacon('00:19:01:70:81:d0','-100'),Beacon('00:19:01:70:81:75','-100'),Beacon('00:19:01:70:86:35','-100')] 
+        top3_list = [Beacon('00:19:01:70:81:d0','-1'),Beacon('00:19:01:70:81:75','-1'),Beacon('00:19:01:70:86:35','-1')] 
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
-        print("----------")
+        #print("----------")
         
         for beacon in returnedList:
 
             if beacon[:5] == "00:19":
-                print(beacon)
+                #print(beacon)
                 
                 now_mac = beacon[:17]
                 now_rssi = beacon[66:] 
@@ -216,10 +223,13 @@ if __name__ == '__main__':
                     #3개가 꽉 찼음을 발견했을 때
                         top3_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top3_list.sort(key= lambda x : x.getRSSI())
-                    try:
-                        locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2])
-                    except:
-                        print("비었음/ 연산 불가 duplicated.")
+                        try:
+                            if top3_list[0].RSSI == -1 or top3_list[1].RSSI == -1 or top3_list[2].RSSI == -1:
+                                print("-1????")
+                            else: locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2])
+                        except:
+                        #print("비었음/ 연산 불가 duplicated.")
+                            None
 
                 elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
                     #이하 코드 같음
@@ -229,12 +239,21 @@ if __name__ == '__main__':
                     else: #큐 동작
                         top3_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
                         top3_list.sort(key= lambda x : x.getRSSI())
-                    try:
-                        locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2]) #삼변측량 결과
-                    except:
-                        print("비었음/ 연산 불가 no duplicated.")
+                        #print(top3_list[0].RSSI, top3_list[1].RSSI, top3_list[2].getRSSI())
+                        try:
+                            if top3_list[0].RSSI == -1 or top3_list[1].RSSI == -1 or top3_list[2].RSSI == -1:
+                                None
+                            else:
+                                locationX, locationY = getTrilateration(top3_list[0], top3_list[1], top3_list[2]) #삼변측량 결과
+                        except:
+                        #print("비었음/ 연산 불가 no duplicated.")
+                            None
         #print(locationX, locationY)
-        x=int(locationX)
-        y=int(locationY)
-        print(x,y)
+        if locationX == -1 or locationY==-1:
+            None
+        else:
+            x=int(locationX/10)
+            y=int(locationY/10)
+            print(x,y)
+
 
