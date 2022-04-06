@@ -105,6 +105,7 @@ if __name__ == '__main__':
                 now_rssi = beacon[66:] 
 
                 maclist =[]
+                top2_list.sort(key= lambda x : x.getRSSI())
                 for x in top2_list:
                     maclist.append(x.getMAC())
 
@@ -116,7 +117,7 @@ if __name__ == '__main__':
                     #2개가 꽉 찼음을 발견했을 때
                         top2_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top2_list.sort(key= lambda x : x.getRSSI())
-                        if top2_list[0].G == top2_list[1].G:
+                        top2_list[0].G == top2_list[1].G:
                             print("==============================")
                             for x in top2_list:
                                 if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
