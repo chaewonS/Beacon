@@ -122,6 +122,8 @@ def getTrilateration(first, second, third):
     # re = re.replace("Circle(","").replace(")","").replace(",","")
     # x,y,r = re.split(" ")
     return x,y
+
+
 #================== Select three ==================================
 
 if __name__ == '__main__':
@@ -161,5 +163,34 @@ if __name__ == '__main__':
 
                 maclist =[]
                 for x in top2_list:
-                    top2_list.append(x.getMAC())
-                    print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
+                    maclist.append(x.getMAC())
+
+                if (now_mac in maclist) and (top2_list[maclist.index(now_mac)].getRSSI() < now_rssi):#1. 리스트에 이미 있는 비콘이며, 더 가까워진 경우.
+                    if len(top2_list) <2:#비콘이 하나 있을 때
+                        top2_list[maclist.index(now_mac)].RSSI = now_rssi
+                        #top2_list.sort(key= lambda x : x.getRSSI())
+                    else:
+                    #2개가 꽉 찼음을 발견했을 때
+                        top2_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
+                        top2_list.sort(key= lambda x : x.getRSSI())
+                        for v,i in top2_list:
+                            if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
+                                break
+                            print("==============================")
+                            print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
+
+                elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
+                    #이하 코드 같음
+                    if len(top2_list) <2 and top2_list[0].G == info[now_mac].G:
+                        top2_list.append(Beacon(now_mac, now_rssi)) #리스트에 추가
+                        top2_list.sort(key= lambda x : x.getRSSI())
+                    else: #큐 동작
+                        top2_list[1] = Beacon(Beacon('00:19:01:70:81:ed','-100'))
+                        top2_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
+                        top2_list.sort(key= lambda x : x.getRSSI())
+                        for v,i in top2_list:
+                            if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
+                                break
+                            print(v)
+                            print("==============================")
+                            print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
