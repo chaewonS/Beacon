@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
         maclist = []
         returnedList = blescan.parse_events(sock, 10)
-        print("----------")
+        #print("----------")
         
         for beacon in returnedList:
 
