@@ -156,7 +156,7 @@ if __name__ == '__main__':
         for beacon in returnedList:
 
             if beacon[:5] == "00:19":
-                print(beacon)
+                #print(beacon)
                 
                 now_mac = beacon[:17]
                 now_rssi = beacon[66:] 
@@ -173,10 +173,10 @@ if __name__ == '__main__':
                     #2개가 꽉 찼음을 발견했을 때
                         top2_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top2_list.sort(key= lambda x : x.getRSSI())
+                        print("==============================")
                         for x in top2_list:
                             if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
                                 break
-                            print("==============================")
                             print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
 
                 elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
