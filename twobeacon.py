@@ -117,12 +117,12 @@ if __name__ == '__main__':
                     #2개가 꽉 찼음을 발견했을 때
                         top2_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top2_list.sort(key= lambda x : x.getRSSI())
-                        top2_list[0].G == top2_list[1].G:
-                            print("==============================")
-                            for x in top2_list:
-                                if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
-                                    break
-                                print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
+                        #if top2_list[0].G == top2_list[1].G:
+                        print("==============================")
+                        for x in top2_list:
+                            if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
+                                break
+                            print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
 
                 elif (now_mac not in maclist): #2. 중복된 기기가 아니면 추가
                     #이하 코드 같음
