@@ -173,7 +173,7 @@ if __name__ == '__main__':
                     #2개가 꽉 찼음을 발견했을 때
                         top2_list[maclist.index(now_mac)].RSSI = now_rssi #동일한 비콘의 RSSI를 수정한다.
                         top2_list.sort(key= lambda x : x.getRSSI())
-                        for v,i in top2_list:
+                        for x in top2_list:
                             if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
                                 break
                             print("==============================")
@@ -188,9 +188,9 @@ if __name__ == '__main__':
                         top2_list[1] = Beacon('00:19:01:70:81:ed','-100')
                         top2_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
                         top2_list.sort(key= lambda x : x.getRSSI())
-                        for v,i in top2_list:
+                        for x in top2_list:
                             if top2_list[0].RSSI == -100 or top2_list[1].RSSI == -100:
                                 break
-                            print(v)
+                            print(x)
                             print("==============================")
                             print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
