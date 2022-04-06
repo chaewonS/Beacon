@@ -55,7 +55,7 @@ top2_list =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100'
 dev_id = 0#scan
 
 #========================================== Definition Of Functions ==================================
-def flusshing():
+def flusshing():#5초마다 
     print("Timer")
     timer = threading.Timer(5, flusshing)
 
@@ -65,63 +65,6 @@ def flusshing():
     timer.start()
 
 #FB301BC 초기 설정 TxPower = 41
-def calculateDistance(rssi) :
-    txPower = 41
-    if (rssi == 0) :
-        return -1.0 #if we cannot determine distance return -1.
-    ratio = rssi*1.0/txPower #
-    if (ratio < 1.0) :
-        return ratio**10
-  
-    else:
-        accuracy =  (0.89976)*(ratio**7.7095) + 0.111
-        return accuracy
-# #https://github.com/location-competition/indoor-location-competition-20
-
-def simpleDistance(rssi):
-    TxPower = 41
-    return 10 ** ((TxPower - rssi )/(10*4)) # 4 = n : 실내공간
-
-
-def getTrilateration(first, second, third):
-    # print("호출")
-    x1, y1 = first.getXY()
-    x2, y2 = second.getXY()
-    x3, y3 = third.getXY()
-
-    # 1 :
-    r1 = calculateDistance(first.getRSSI())
-    r2 = calculateDistance(second.getRSSI())
-    r3 = calculateDistance(third.getRSSI())
-    print("==============실제 거리와 비교해보기========================")
-    print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3)) #use old formatstring to run it with python 2.7
-    
-    
-    # 2 :
-    # r1 = calculateDistance(first.getRSSI())
-    # r2 = calculateDistance(second.getRSSI())
-    # r3 = calculateDistance(third.getRSSI())
-    # print("==============실제 거리와 비교해보기========================")
-    #print("distances : r1 =%f r2=%f r3=%f" %(r1, r2, r3))
-
-    S = (x3**2 - x2**2 + y3**2 - y2**2 + r2**2 - r3**2 )/2.0
-    T = (x1**2 - x2**2 + y1**2 + y2**2 + r2**2 - r1**2)/2.0
-
-    y = (  ((T*(x2-x3))) - (S *(x2-x1))  ) / (  ((y1-y2)*(x2-x3)) -  ((y3-y2)*(x2-x1)) )
-    x = ((y* (y1-y2)) - T) /(x2-x1)
-    # arr = [Circle(x1,y1, float(first.getRSSI())),    #(x,y,r)
-    # Circle(x2,y2, float(second.getRSSI())),
-    # Circle(x3,y3, float(third.getRSSI()))]
-    # # Circle(8,2, float(math.sqrt(17)))         # 4 beacon 으로 하면 정확도 up
-
-    # result, meta = easy_least_squares(arr)
-    # create_circle(result, target=True)
-    
-    # # 값 추출
-    # re = str(result)
-    # re = re.replace("Circle(","").replace(")","").replace(",","")
-    # x,y,r = re.split(" ")
-    return x,y
 
 
 #================== Select three ==================================
