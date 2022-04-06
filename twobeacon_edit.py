@@ -161,5 +161,5 @@ if __name__ == '__main__':
 
                 maclist =[]
                 for x in top2_list:
-                    maclist.append(x.getMAC())
+                    top2_list.append(x.getMAC())
                     print("%s그룹,  id : %s RSSI: %s" %(x.G, x.MAC[12:], x.RSSI))
