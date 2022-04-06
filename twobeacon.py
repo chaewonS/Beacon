@@ -185,7 +185,7 @@ if __name__ == '__main__':
                         top2_list.append(Beacon(now_mac, now_rssi)) #리스트에 추가
                         top2_list.sort(key= lambda x : x.getRSSI())
                     else: #큐 동작
-                        top2_list[1] = Beacon(Beacon('00:19:01:70:81:ed','-100'))
+                        top2_list[1] = Beacon('00:19:01:70:81:ed','-100')
                         top2_list[0] = Beacon(now_mac, now_rssi)  #rssi가 가장 작은 비콘을 삭제하고 추가
                         top2_list.sort(key= lambda x : x.getRSSI())
                         for v,i in top2_list:
