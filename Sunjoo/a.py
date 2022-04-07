@@ -48,9 +48,15 @@ if __name__ == '__main__':
         for beacon in returnedList:#blescan 스레드에서 반환되는 신호 리스트
             if beacon[:5] == "00:19":#FB301이 들어오면
                 #새로 탐지된 신호의정보
-                now_mac = beacon[:17]
-                now_rssi = beacon[66:]
-
+                #now_mac = beacon[:17]
+                #now_rssi = beacon[66:]
+                beacon_s = beacon.split(",")
+                now_mac = beacon_s[0]
+                now_rssi = beacon_s[-1]
+                if now_rssi == '':
+                    print("Beacon {} is matter!!!!!!!!!".format(now_mac)) #문제의 그 지점
+                    #continue
+                    
                 #현재 가까운 2가지의 mac 주소를 저장시키는 리스트
                 maclist=[]
                 for x in top2:
