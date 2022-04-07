@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import io
 import json
- 
+
 Beacon = dict()
 
 init1 = dict()
