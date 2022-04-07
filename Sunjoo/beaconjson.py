@@ -4,6 +4,18 @@ import json
 
 Beacon = dict()
 
+init1 = dict()
+init1["location"] = "-1, -1"
+init1["place"] = "초기화1"
+init1["group"] = "-1"
+Beacon["init1"] = init1
+
+init2 = dict()
+init2["location"] = "-1, -1"
+init2["place"] = "초기화2"
+init2["group"] = "-1"
+Beacon["init2"] = init2
+
 beacon1 = dict()
 
 beacon1["location"] = "1,1"
