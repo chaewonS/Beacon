@@ -56,13 +56,19 @@ if __name__ == '__main__':
                 if now_rssi == '':
                     print("Beacon {} is matter!!!!!!!!!".format(now_mac)) #문제의 그 지점
                     #continue
-                    
+                   
                 #현재 가까운 2가지의 mac 주소를 저장시키는 리스트
                 maclist=[]
                 for x in top2:
                     maclist.append(x.MAC) #[init, 00:19~]
                 print("origin top2 mac list = {}".format(maclist))
-
+                if 'init1' in maclist:
+                    top2[0] = Beacon(now_mac, now_rssi)
+                    continue
+                elif 'init2' in maclist:
+                    top2[1] = Beacon(now_mac, now_rssi)
+                    continue
+                
                 if (now_mac in maclist):
                     #현재 top2 출력
                     print("already exist beacons!")
