@@ -13,7 +13,7 @@ def flusshing():
     print("Timer")
     timer = threading.Timer(5, flusshing)#5초 뒤 이 함수 재실행
     global top2 #전역변수를 함수내에 불러온다.
-    top2 =[Beacon('00:19:01:70:81:ed','-100'),Beacon('00:19:01:70:82:62','-100')]
+    top2 =[Beacon('init1','-100'), Beacon('init2','-100')]
     timer.start()
 
 class Beacon():
