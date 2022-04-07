@@ -20,7 +20,7 @@ class Beacon():
     def __init__(self, mac, rssi):#주소, rssi
         self.MAC = mac
         self.RSSI = int(rssi)
-        self.G = int(file[mac]["group"])
+        #self.G = int(file[mac]["group"])
 
 with io.open('./beacon.json') as f:
     file = json.load(f)
