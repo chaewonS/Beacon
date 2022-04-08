@@ -39,4 +39,4 @@ while True:
                         print "================================================="
                         print("총 %d개의 비콘을 찾았습니다." %beacons)
                         for x in maclist:
-                            print ("%s : %s" %(x[12:17], info[x]['place']))
+                            print ("%s" %(x[12:17]))
