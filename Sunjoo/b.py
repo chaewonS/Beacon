@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
  
 import io
-from os import getgrouplist
 import threading
 
 import blescan
