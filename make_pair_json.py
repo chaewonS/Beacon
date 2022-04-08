@@ -37,13 +37,13 @@ Beacon["00:19:01:70:84:4b"] = beacon4
 beacon5 = dict()
 beacon5["location"] = "1,1"
 beacon5["place"] = "좌상단"
-beacon5["group"] = "3"
+beacon5["group"] = "10"
 Beacon["00:19:01:70:82:cb"] = beacon5
 
 beacon6 = dict()
 beacon6["location"] = "1,1"
 beacon6["place"] = "좌상단"
-beacon6["group"] = "3"
+beacon6["group"] = "10"
 Beacon["00:19:01:70:86:2e"] = beacon6
 
 
@@ -83,13 +83,13 @@ Beacon["00:19:01:70:81:33"] = beacon10
 beacon11 = dict()
 beacon11["location"] = "1,1"
 beacon11["place"] = "좌상단"
-beacon11["group"] = "6"
+beacon11["group"] = "3"
 Beacon["00:19:01:70:80:de"] = beacon11
 
 beacon12 = dict()
 beacon12["location"] = "1,1"
 beacon12["place"] = "좌상단"
-beacon12["group"] = "6"
+beacon12["group"] = "3"
 Beacon["00:19:01:70:81:75"] = beacon12
 
 
