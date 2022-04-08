@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
  
 import io
+from os import getgrouplist
 import threading
 
 import blescan
@@ -9,11 +10,21 @@ import bluetooth._bluetooth as bluez
 import json
 import threading
 
+from collections import Counter
+
 def flusshing():
     print("Timer")
     timer = threading.Timer(5, flusshing)#5초 뒤 이 함수 재실행
     global top2 #전역변수를 함수내에 불러온다.
     top2 =[Beacon('init1','-100'), Beacon('init2','-100')]
+    timer.start()
+
+def Groupflussh():
+    print("flusshed")
+    timer = threading.Timer(3,Groupflussh)#5초
+    print(Glist)
+    global Glist
+    Glist = []
     timer.start()
 
 class Beacon():
@@ -22,10 +33,9 @@ class Beacon():
         self.RSSI = int(rssi)
         self.G = int(file[mac]["group"])
 
-with io.open('./pair.json') as f:
+with io.open('./beacon.json') as f:
     file = json.load(f)
 
-global top2
 
 if __name__ == '__main__':
     flusshing()#주기적으로 리스트를 비워준다. 
@@ -83,6 +93,8 @@ if __name__ == '__main__':
                             top2[a] = Beacon(now_mac, now_rssi)
                             break#비콘 바꾸는 리스트 탐색 종료: 한 번 조건문 들어가면 끝나게 됨
                             #만약 두번째에 있는애가 너무 강해서 바뀌지 않는 경우 fllushing 함수가 처리해줄것이라 기대함.
-                            
+
                 if top2[a].MAC != 'init1' and top2[a].RSSI != 'init2' and top2[0].G == top2[1].G:
-                    print("Group : {}".format(top2[0].G))
+                    Glist.append(top2[0].G)
+                    cnt = Counter(Glist)
+                    print("Group : {}".format(cnt.most_common()[0][0]))
